@@ -30,13 +30,11 @@ public class CouponList {
     }
 
     public void addElement(Coupon c) {
-        if(list.contains(c))
-            throw new IllegalArgumentException("coupon already in list");
         if(list.isEmpty()) {
             list.add(c);
             return;
         }
-        // keep the list ordered by company name
+        // keep the list ordered by identifier name
         for(Coupon e : list) {
             if(e.getIdentifier().compareTo(c.getIdentifier()) < 0)
                 continue;
@@ -58,6 +56,7 @@ public class CouponList {
         return list.size();
     }
 
+    // check if a given coupon identifier has already been used inside the coupon list
     public boolean containsCouponNamed(String name) {
         return !list.stream()
                 .filter(c -> c.getIdentifier().equals(name))

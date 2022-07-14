@@ -27,6 +27,7 @@ public class AddActivity extends AppCompatActivity {
         EditText codeInput = (EditText)findViewById(R.id.codeInput);
         EditText expirationInput = (EditText)findViewById(R.id.expirationInput);
         String identifier = identifierInput.getText().toString();
+        // display error message if coupon identifier has been already used
         if(CouponList.getInstance().containsCouponNamed(identifier)) {
             Toast errorMessage = Toast.makeText(getApplicationContext(), "Nome giá esistente", Toast.LENGTH_SHORT);
             errorMessage.show();

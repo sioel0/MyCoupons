@@ -31,19 +31,25 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
         public ViewHolder(View v) {
             super(v);
             this.v = v;
+
+            // click on single cell opens detail activity
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), DetailActivity.class);
                     int position = getLayoutPosition();
+                    // add additional data which will be displayed in intent destination activity
                     intent.putExtra(COUPON_CODE, list.couponAtIndex(position).getCode());
                     intent.putExtra(IDENTIFIER, list.couponAtIndex(position).getIdentifier());
+                    // send coupon expiration date only if necessary
                     if(list.couponAtIndex(position).getExpiration() != null)
                         intent.putExtra(COUPON_EXPIRATION, list.couponAtIndex(position).getExpiration().toString());
+                    // start new activity
                     view.getContext().startActivity(intent);
                 }
             });
 
+            // long click on cell deletes it
             v.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -51,7 +57,8 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
                     notifyItemRemoved(position);
                     Coupon removed = CouponList.getInstance().couponAtIndex(position);
                     CouponList.getInstance().removeElement(position);
-                    Snackbar undo = Snackbar.make(view, "\"" + removed.getIdentifier() + "\" removed", Snackbar.LENGTH_SHORT);
+                    // display toast to give th possibility to undo changes
+                    Snackbar undo = Snackbar.make(view, "\"" + removed.getIdentifier() + "\" removed", Snackbar.LENGTH_LONG);
                     undo.setAction("undo", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -68,6 +75,8 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
         public void setText(String text, boolean expired) {
             TextView textView = (TextView) v.findViewById(R.id.textView);
             textView.setText(text);
+
+            // if coupon is expired display it in red
             if(expired)
                 textView.setTextColor(0xFFFF0000);
         }

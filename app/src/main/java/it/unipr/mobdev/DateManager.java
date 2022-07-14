@@ -3,10 +3,7 @@ package it.unipr.mobdev;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/*
-class used to compare dates, I decided to create this class because I may need some custom date
-related functions in more than one class in the project
- */
+// class for custom date related functions
 public class DateManager {
 
     // checks if date1 comes before date2

@@ -24,6 +24,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
+        // retrieve data from the intent that started the activity
         String code = intent.getStringExtra(COUPON_CODE);
         String company = intent.getStringExtra(IDENTIFIER);
         String expiration = intent.getStringExtra(COUPON_EXPIRATION);
@@ -42,7 +43,6 @@ public class DetailActivity extends AppCompatActivity {
             }
         }
         // generate and display barcode
-        ImageView displayCode = (ImageView)findViewById(R.id.qrBarCode);
     }
 
     private Bitmap displayBarCode() {
