@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-// TODO: make expired coupons appear in red color
+import com.google.android.material.snackbar.Snackbar;
 
 public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder> {
 
@@ -23,7 +23,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
 
         // strings that will be use inside intent to switch to activity_detail view
         public static final String COUPON_CODE = "it.unipr.mobdev.CouponAdapter.ViewHolder.COUPON_CODE";
-        public static final String COMPANY_NAME = "it.unipr.mobdev.CouponAdapter.ViewHolder.COMPANY_NAME";
+        public static final String IDENTIFIER = "it.unipr.mobdev.CouponAdapter.ViewHolder.COMPANY_NAME";
         public static final String COUPON_EXPIRATION = "it.unipr.mobdev.CouponAdapter.ViewHolder.COUPON_EXTRA";
 
         private View v;
@@ -37,7 +37,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
                     Intent intent = new Intent(view.getContext(), DetailActivity.class);
                     int position = getLayoutPosition();
                     intent.putExtra(COUPON_CODE, list.couponAtIndex(position).getCode());
-                    intent.putExtra(COMPANY_NAME, list.couponAtIndex(position).getCompany());
+                    intent.putExtra(IDENTIFIER, list.couponAtIndex(position).getIdentifier());
                     if(list.couponAtIndex(position).getExpiration() != null)
                         intent.putExtra(COUPON_EXPIRATION, list.couponAtIndex(position).getExpiration().toString());
                     view.getContext().startActivity(intent);
@@ -47,14 +47,29 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
             v.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
+                    int position = getLayoutPosition();
+                    notifyItemRemoved(position);
+                    Coupon removed = CouponList.getInstance().couponAtIndex(position);
+                    CouponList.getInstance().removeElement(position);
+                    Snackbar undo = Snackbar.make(view, "\"" + removed.getIdentifier() + "\" removed", Snackbar.LENGTH_SHORT);
+                    undo.setAction("undo", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            CouponList.getInstance().addElement(removed);
+                            notifyItemInserted(position);
+                        }
+                    });
+                    undo.show();
                     return false;
                 }
             });
         }
 
-        public void setText(String text) {
+        public void setText(String text, boolean expired) {
             TextView textView = (TextView) v.findViewById(R.id.textView);
             textView.setText(text);
+            if(expired)
+                textView.setTextColor(0xFFFF0000);
         }
     }
 
@@ -70,7 +85,11 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setText(list.couponAtIndex(position).getCompany());
+        boolean expired = false;
+        Coupon c = list.couponAtIndex(position);
+        if(c.getExpiration() != null && c.getExpiration() != "")
+            expired = DateManager.compareDates(DateManager.currentDate(), c.getExpiration());
+        holder.setText(list.couponAtIndex(position).getIdentifier(), expired);
     }
 
     @Override

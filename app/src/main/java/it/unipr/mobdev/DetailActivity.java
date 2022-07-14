@@ -1,6 +1,6 @@
 package it.unipr.mobdev;
 
-import static it.unipr.mobdev.CouponAdapter.ViewHolder.COMPANY_NAME;
+import static it.unipr.mobdev.CouponAdapter.ViewHolder.IDENTIFIER;
 import static it.unipr.mobdev.CouponAdapter.ViewHolder.COUPON_CODE;
 import static it.unipr.mobdev.CouponAdapter.ViewHolder.COUPON_EXPIRATION;
 
@@ -16,7 +16,7 @@ import android.widget.TextView;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-// TODO: add qr/bar code generation and display
+// TODO: add qr/bar code generation and display managed with switch
 public class DetailActivity extends AppCompatActivity {
 
     @Override
@@ -25,7 +25,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
         String code = intent.getStringExtra(COUPON_CODE);
-        String company = intent.getStringExtra(COMPANY_NAME);
+        String company = intent.getStringExtra(IDENTIFIER);
         String expiration = intent.getStringExtra(COUPON_EXPIRATION);
         if(company != null) {
             setTitle(company);
@@ -35,9 +35,7 @@ public class DetailActivity extends AppCompatActivity {
             codeView.setText(code);
         }
         if(expiration != null && expiration != "") {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDateTime now = LocalDateTime.now();
-            if(compareDates(formatter.format(now), expiration)) {
+            if(DateManager.compareDates(DateManager.currentDate(), expiration)) {
                 TextView expirationView = (TextView) findViewById(R.id.expirationView);
                 expirationView.setText("Scaduto il " + expiration);
                 expirationView.setVisibility(View.VISIBLE);
@@ -45,23 +43,6 @@ public class DetailActivity extends AppCompatActivity {
         }
         // generate and display barcode
         ImageView displayCode = (ImageView)findViewById(R.id.qrBarCode);
-    }
-
-    // checks if date1 comes before date2
-    private boolean compareDates(String date1, String date2) {
-        if(date1.compareTo(date2) == 0)
-            return false;
-
-        String[] d1 = date1.split("/");
-        String[] d2 = date2.split("/");
-
-        if(d1[2].compareTo(d2[2]) > 0)
-            return true;
-        if(d1[2].compareTo(d2[2]) == 0 && d1[1].compareTo(d2[1]) > 0)
-            return true;
-        if(d1[2].compareTo(d2[2]) == 0 && d1[1].compareTo(d2[1]) == 0 && d1[0].compareTo(d2[0]) > 0)
-            return true;
-        return false;
     }
 
     private Bitmap displayBarCode() {

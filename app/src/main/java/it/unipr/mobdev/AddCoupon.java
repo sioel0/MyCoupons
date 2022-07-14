@@ -20,18 +20,19 @@ public class AddCoupon extends AppCompatActivity {
 
     }
 
+    // TODO: display error if a coupon with that name already exists
     public void saveInput(View view) {
-        EditText companyInput = (EditText)findViewById(R.id.companyInput);
+        EditText identifierInput = (EditText)findViewById(R.id.identifierInput);
         EditText codeInput = (EditText)findViewById(R.id.codeInput);
         EditText expirationInput = (EditText)findViewById(R.id.expirationInput);
-        String company = companyInput.getText().toString();
+        String identifier = identifierInput.getText().toString();
         String code = codeInput.getText().toString();
         String expiration = expirationInput.getText().toString();
         Coupon c;
         if(expiration != "")
-            c = new Coupon(company, code, expiration);
+            c = new Coupon(identifier, code, expiration);
         else
-            c = new Coupon(company, code);
+            c = new Coupon(identifier, code);
 
         CouponList.getInstance().addElement(c);
         finish();

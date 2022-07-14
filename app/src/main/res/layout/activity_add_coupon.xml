@@ -20,7 +20,7 @@
         app:srcCompat="@android:drawable/ic_menu_save" />
 
     <EditText
-        android:id="@+id/companyInput"
+        android:id="@+id/identifierInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -65,7 +65,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/companyInput" />
+        app:layout_constraintTop_toBottomOf="@+id/identifierInput" />
 
     <EditText
         android:id="@+id/expirationInput"

@@ -37,7 +37,7 @@ public class CouponList {
         }
         // keep the list ordered by company name
         for(Coupon e : list) {
-            if(e.getCompany().compareTo(c.getCompany()) < 0)
+            if(e.getIdentifier().compareTo(c.getIdentifier()) < 0)
                 continue;
             list.add(list.indexOf(e), c);
             return;
@@ -45,8 +45,8 @@ public class CouponList {
         list.add(c);
     }
 
-    public void removeElement(Coupon c) {
-        list.remove(c);
+    public void removeElement(int index) {
+        list.remove(index);
     }
 
     public Coupon couponAtIndex(int index) {
