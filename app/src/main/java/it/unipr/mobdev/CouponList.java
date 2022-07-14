@@ -5,6 +5,7 @@ import java.util.List;
 
 // singleton class to make sure that there is only one coupon list in all the application
 public class CouponList {
+
     private final List<Coupon> list;
     private static CouponList couponList;
 
@@ -20,11 +21,11 @@ public class CouponList {
     }
 
     private void addData() {
-        addElement(new Coupon("McDonalds", "abcd", 1));
-        addElement(new Coupon("Rosso Pomodoro", "1234", 1));
-        addElement(new Coupon("Camion", "12ab", 1));
-        addElement(new Coupon("AliExpress", "23cd", 1));
-        addElement(new Coupon("Burger King", "1bc4", 1));
+        addElement(new Coupon("McDonalds", "abcd"));
+        addElement(new Coupon("Rosso Pomodoro", "1234"));
+        addElement(new Coupon("Camion", "12ab"));
+        addElement(new Coupon("AliExpress", "23cd"));
+        addElement(new Coupon("Burger King", "1bc4"));
     }
 
     public void addElement(Coupon c) {
@@ -55,4 +56,5 @@ public class CouponList {
     public int size() {
         return list.size();
     }
+
 }

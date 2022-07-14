@@ -1,23 +1,20 @@
 package it.unipr.mobdev;
 
 public class Coupon {
+
     private final String company;
     private final String code;
-    // 1 qr code -- 2 bar code
-    private final int format;
-    private Expiration expiration;
+    private String expiration;
 
-    public Coupon(String company, String code, int format) {
+    public Coupon(String company, String code) {
         this.company = company;
         this.code = code;
-        this.format = format;
         this.expiration = null;
     }
 
-    public Coupon(String company, String code, int format, Expiration expiration) {
+    public Coupon(String company, String code, String expiration) {
         this.company = company;
         this.code = code;
-        this.format = format;
         this.expiration = expiration;
     }
 
@@ -29,11 +26,7 @@ public class Coupon {
         return code;
     }
 
-    public int getFormat() {
-        return format;
-    }
-
-    public Expiration getExpiration() {
+    public String getExpiration() {
         return expiration;
     }
 

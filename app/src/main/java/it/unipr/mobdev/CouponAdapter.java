@@ -24,7 +24,6 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
         // strings that will be use inside intent to switch to activity_detail view
         public static final String COUPON_CODE = "it.unipr.mobdev.CouponAdapter.ViewHolder.COUPON_CODE";
         public static final String COMPANY_NAME = "it.unipr.mobdev.CouponAdapter.ViewHolder.COMPANY_NAME";
-        public static final String CODE_FORMAT = "it.unipr.mobdev.CouponAdapter.ViewHolder.CODE_FORMAT";
         public static final String COUPON_EXPIRATION = "it.unipr.mobdev.CouponAdapter.ViewHolder.COUPON_EXTRA";
 
         private View v;
@@ -39,10 +38,16 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
                     int position = getLayoutPosition();
                     intent.putExtra(COUPON_CODE, list.couponAtIndex(position).getCode());
                     intent.putExtra(COMPANY_NAME, list.couponAtIndex(position).getCompany());
-                    intent.putExtra(CODE_FORMAT, list.couponAtIndex(position).getFormat());
                     if(list.couponAtIndex(position).getExpiration() != null)
                         intent.putExtra(COUPON_EXPIRATION, list.couponAtIndex(position).getExpiration().toString());
                     view.getContext().startActivity(intent);
+                }
+            });
+
+            v.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    return false;
                 }
             });
         }
@@ -72,4 +77,5 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
     public int getItemCount() {
         return list.size();
     }
+
 }
