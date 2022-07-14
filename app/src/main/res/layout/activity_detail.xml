@@ -47,7 +47,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/couponCode"
-        tools:text="expiration" />
+        tools:text="expiration"
+        tools:visibility="visible" />
 
     <Switch
         android:id="@+id/qrBarSwitch"

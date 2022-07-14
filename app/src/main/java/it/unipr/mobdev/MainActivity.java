@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addButtonPressed(View view) {
-        Intent intent = new Intent(this, AddCoupon.class);
+        Intent intent = new Intent(this, AddActivity.class);
         startActivity(intent);
     }
 

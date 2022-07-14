@@ -2,6 +2,7 @@ package it.unipr.mobdev;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // singleton class to make sure that there is only one coupon list in all the application
 public class CouponList {
@@ -55,6 +56,12 @@ public class CouponList {
 
     public int size() {
         return list.size();
+    }
+
+    public boolean containsCouponNamed(String name) {
+        return !list.stream()
+                .filter(c -> c.getIdentifier().equals(name))
+                .collect(Collectors.toSet()).isEmpty();
     }
 
 }
