@@ -1,5 +1,6 @@
 package it.unipr.mobdev;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+// TODO: make expired coupons appear in red color
 
 public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder> {
 
@@ -17,11 +20,31 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
+        // strings that will be use inside intent to switch to activity_detail view
+        public static final String COUPON_CODE = "it.unipr.mobdev.CouponAdapter.ViewHolder.COUPON_CODE";
+        public static final String COMPANY_NAME = "it.unipr.mobdev.CouponAdapter.ViewHolder.COMPANY_NAME";
+        public static final String CODE_FORMAT = "it.unipr.mobdev.CouponAdapter.ViewHolder.CODE_FORMAT";
+        public static final String COUPON_EXPIRATION = "it.unipr.mobdev.CouponAdapter.ViewHolder.COUPON_EXTRA";
+
         private View v;
 
         public ViewHolder(View v) {
             super(v);
             this.v = v;
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                    int position = getLayoutPosition();
+                    intent.putExtra(COUPON_CODE, list.couponAtIndex(position).getCode());
+                    intent.putExtra(COMPANY_NAME, list.couponAtIndex(position).getCompany());
+                    intent.putExtra(CODE_FORMAT, list.couponAtIndex(position).getFormat());
+                    if(list.couponAtIndex(position).getExpiration() != null)
+                        intent.putExtra(COUPON_EXPIRATION, list.couponAtIndex(position).getExpiration().toString());
+                    view.getContext().startActivity(intent);
+                }
+            });
         }
 
         public void setText(String text) {

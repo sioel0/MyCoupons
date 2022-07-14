@@ -20,11 +20,11 @@ public class CouponList {
     }
 
     private void addData() {
-        addElement(new Coupon("McDonalds", "12ab", 1));
-        addElement(new Coupon("Rosso Pomodoro", "12ab", 1));
+        addElement(new Coupon("McDonalds", "abcd", 1));
+        addElement(new Coupon("Rosso Pomodoro", "1234", 1));
         addElement(new Coupon("Camion", "12ab", 1));
-        addElement(new Coupon("AliExpress", "12ab", 1));
-        addElement(new Coupon("Burger King", "12ab", 1));
+        addElement(new Coupon("AliExpress", "23cd", 1));
+        addElement(new Coupon("Burger King", "1bc4", 1));
     }
 
     public void addElement(Coupon c) {
