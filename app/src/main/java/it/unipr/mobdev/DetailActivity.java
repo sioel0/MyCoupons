@@ -10,13 +10,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
+
+import com.google.zxing.BarcodeFormat;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-// TODO: add qr/bar code generation and display managed with switch
 public class DetailActivity extends AppCompatActivity {
 
     @Override
@@ -42,15 +46,41 @@ public class DetailActivity extends AppCompatActivity {
                 expirationView.setVisibility(View.VISIBLE);
             }
         }
-        // generate and display barcode
+        displayBarCode();
+        Switch qrBarSwitch = (Switch)  findViewById(R.id.qrBarSwitch);
+        qrBarSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    displayQrCode();
+                else
+                    displayBarCode();
+            }
+
+        });
     }
 
-    private Bitmap displayBarCode() {
-        return null;
+    private void displayBarCode() {
+        try {
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.encodeBitmap("content", BarcodeFormat.CODE_128, 400, 400);
+            ImageView imageViewQrCode = (ImageView) findViewById(R.id.qrBarCode);
+            imageViewQrCode.setImageBitmap(bitmap);
+        } catch(Exception e) {
+            return;
+        }
     }
 
-    private Bitmap displayQrCode() {
-        return null;
+    private void displayQrCode() {
+        try {
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.encodeBitmap("content", BarcodeFormat.QR_CODE, 400, 400);
+            ImageView imageViewQrCode = (ImageView) findViewById(R.id.qrBarCode);
+            imageViewQrCode.setImageBitmap(bitmap);
+        } catch(Exception e) {
+            return;
+        }
     }
 
 }

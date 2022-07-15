@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-// TODO: (?) add data persistence management
+// TODO: (?) add data persistence
 public class MainActivity extends AppCompatActivity {
 
     @Override
