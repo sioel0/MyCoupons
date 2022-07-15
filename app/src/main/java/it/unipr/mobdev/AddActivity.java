@@ -13,6 +13,9 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class AddActivity extends AppCompatActivity {
 
     public static final String LOG="AddCoupon";
@@ -27,10 +30,28 @@ public class AddActivity extends AppCompatActivity {
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
             result -> {
                 if(result.getContents() == null) {
-                    Toast.makeText(AddActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                 } else {
-                    // TODO: extrapolate date and write it inside addActivity editText views
-                    Toast.makeText(AddActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                    String scannedValue = result.getContents();
+                    // check if the scanned value is an alphanumeric value
+                    if(scannedValue.chars().allMatch(Character::isLetterOrDigit)) {
+                        EditText codeText = (EditText)findViewById(R.id.codeInput);
+                        codeText.setText(scannedValue);
+                    }
+                    else {
+                        try {
+                            JSONObject data = new JSONObject(scannedValue);
+                            Toast.makeText(AddActivity.this, data.toString(), Toast.LENGTH_SHORT).show();
+                            String expiration = data.get("exp").toString();
+                            String code = data.get("code").toString();
+                            EditText codeText = (EditText) findViewById(R.id.codeInput);
+                            EditText expText = (EditText) findViewById(R.id.expirationInput);
+                            codeText.setText(code);
+                            expText.setText(expiration);
+                        } catch (JSONException e) {
+                            Toast.makeText(AddActivity.this, "Codice non valido", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             });
 
@@ -43,7 +64,6 @@ public class AddActivity extends AppCompatActivity {
         barcodeLauncher.launch(options);
     }
 
-    // TODO: error if name or code is empty
     public void saveInput(View view) {
         EditText identifierInput = (EditText)findViewById(R.id.identifierInput);
         EditText codeInput = (EditText)findViewById(R.id.codeInput);
@@ -59,6 +79,19 @@ public class AddActivity extends AppCompatActivity {
         }
         String code = codeInput.getText().toString();
         String expiration = expirationInput.getText().toString();
+        if(code.equals("") || identifier.equals("")) {
+            Toast errorMessage = Toast.makeText(getApplicationContext(), "Informazioni mancanti", Toast.LENGTH_SHORT);
+            errorMessage.show();
+            TextView codeTitle = (TextView)findViewById(R.id.codeTextView);
+            TextView identifierTextView = (TextView)findViewById(R.id.companyTextView);
+            codeTitle.setTextColor(0xFF000000);
+            identifierTextView.setTextColor(0xFF000000);
+            if(code.equals(""))
+                codeTitle.setTextColor(0xFFFF0000);
+            if(identifier.equals(""))
+                identifierTextView.setTextColor(0xFFFF0000);
+            return;
+        }
         Coupon c;
         if(expiration.equals(""))
             c = new Coupon(identifier, code);
