@@ -78,7 +78,7 @@ public class DetailActivity extends AppCompatActivity {
         try {
             TextView couponCode = (TextView)findViewById(R.id.couponCode);
             TextView expiration = (TextView)findViewById(R.id.expirationView);
-            String content = "{\"exp\": \"" + couponCode.getText() + "\", \"code\":\"" + expiration.getText().toString().substring(11) + "\"}";
+            String content = couponCode.getText().toString();
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.encodeBitmap(content, BarcodeFormat.QR_CODE, 400, 400);
             ImageView imageViewQrCode = (ImageView) findViewById(R.id.qrBarCode);

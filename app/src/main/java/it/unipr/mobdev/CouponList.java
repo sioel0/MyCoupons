@@ -18,15 +18,6 @@ public class CouponList {
 
     private CouponList() {
         this.list = new ArrayList<>();
-        this.addData();
-    }
-
-    private void addData() {
-        addElement(new Coupon("McDonalds", "abcd"));
-        addElement(new Coupon("Rosso Pomodoro", "1234"));
-        addElement(new Coupon("Camion", "12ab"));
-        addElement(new Coupon("AliExpress", "23cd"));
-        addElement(new Coupon("Burger King", "1bc4"));
     }
 
     public void addElement(Coupon c) {

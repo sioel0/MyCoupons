@@ -39,18 +39,7 @@ public class AddActivity extends AppCompatActivity {
                         codeText.setText(scannedValue);
                     }
                     else {
-                        try {
-                            JSONObject data = new JSONObject(scannedValue);
-                            Toast.makeText(AddActivity.this, data.toString(), Toast.LENGTH_SHORT).show();
-                            String expiration = data.get("exp").toString();
-                            String code = data.get("code").toString();
-                            EditText codeText = (EditText) findViewById(R.id.codeInput);
-                            EditText expText = (EditText) findViewById(R.id.expirationInput);
-                            codeText.setText(code);
-                            expText.setText(expiration);
-                        } catch (JSONException e) {
-                            Toast.makeText(AddActivity.this, "Codice non valido", Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(AddActivity.this, "Codice non valido", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
