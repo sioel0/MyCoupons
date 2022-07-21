@@ -61,6 +61,7 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+    // generate and display the bar code
     private void displayBarCode() {
         try {
             TextView couponCode = (TextView)findViewById(R.id.couponCode);
@@ -74,6 +75,7 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    // generate and display the qr code
     private void displayQrCode() {
         try {
             TextView couponCode = (TextView)findViewById(R.id.couponCode);

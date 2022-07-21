@@ -44,7 +44,7 @@ public class AddActivity extends AppCompatActivity {
                 }
             });
 
-    // Launch
+    // method used to launch code scanner
     public void scanCode(View view) {
         ScanOptions options = new ScanOptions();
         options.setPrompt("Scansiona codice a barre o QR");
@@ -53,6 +53,7 @@ public class AddActivity extends AppCompatActivity {
         barcodeLauncher.launch(options);
     }
 
+    // used to save the new coupon and verify the data integrity of the newly created coupon
     public void saveInput(View view) {
         EditText identifierInput = (EditText)findViewById(R.id.identifierInput);
         EditText codeInput = (EditText)findViewById(R.id.codeInput);
@@ -73,8 +74,6 @@ public class AddActivity extends AppCompatActivity {
             errorMessage.show();
             TextView codeTitle = (TextView)findViewById(R.id.codeTextView);
             TextView identifierTextView = (TextView)findViewById(R.id.companyTextView);
-            codeTitle.setTextColor(0xFF000000);
-            identifierTextView.setTextColor(0xFF000000);
             if(code.equals(""))
                 codeTitle.setTextColor(0xFFFF0000);
             if(identifier.equals(""))

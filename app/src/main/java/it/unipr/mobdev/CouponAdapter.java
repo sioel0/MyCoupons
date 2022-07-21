@@ -19,6 +19,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
         this.list = CouponList.getInstance();
     }
 
+    // recyclerView element
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         // strings that will be use inside intent to switch to activity_detail view
@@ -49,7 +50,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
                 }
             });
 
-            // long click on cell deletes it
+            // long click on a cell deletes it
             v.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -57,7 +58,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
                     notifyItemRemoved(position);
                     Coupon removed = CouponList.getInstance().couponAtIndex(position);
                     CouponList.getInstance().removeElement(position);
-                    // display toast to give th possibility to undo changes
+                    // display toast to give the possibility to undo changes
                     Snackbar undo = Snackbar.make(view, "\"" + removed.getIdentifier() + "\" removed", Snackbar.LENGTH_LONG);
                     undo.setAction("undo", new View.OnClickListener() {
                         @Override
@@ -82,6 +83,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
         }
     }
 
+    // create a new viewHolder for the current that have to be displayed
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -92,6 +94,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder
         return vh;
     }
 
+    // initialize a viewHolder based on its position
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         boolean expired = false;

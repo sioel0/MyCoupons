@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-// TODO: (?) add data persistence
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 list.addElement(c);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(this, "Impossibile caricare i dati", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -59,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
 
         // save data to file
         try {
